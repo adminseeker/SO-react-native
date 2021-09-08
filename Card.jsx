@@ -12,22 +12,24 @@ const styles = StyleSheet.create({
     
   });
 export default function AppCard(props) {
-  const { q_id, q_score, q_title, q_display_name, q_body, q_answer_count } =
-    props;
-  const [clickedQuestion, setClickedQuestion] = useState(false);
+  const { q_id, q_score, q_title, q_display_name, q_body, q_answer_count } = props;
+  const [viewClickedQuestion, setViewClickedQuestion] = useState(false);
+  // const [ClickedQuestion, setClickedQuestion] = useState(false);
+  const [res, setResult] = useState(null);
   const { width } = useWindowDimensions(); //problematic 
-//   whats the prob
-//the window after clicking view question body is setting to the width of the entire screen. we want it to inherit it from the card
-// oh boy !!!!!!!!!!!! still there no?
-//THe left part is fed up
+  
+  
+  
   return (
+    
     <Card>
-      <Card.Title>{q_title.length>30?(q_title.substring(0,30)+"..."):q_title}</Card.Title>
+
+     <Card.Title onPress={()=>props.getAnswers()}>{q_title}</Card.Title>
       <Text>Asked By: {q_display_name}</Text>
       <Text>Score: {q_score}</Text>
       <Text>Total Answers: {q_answer_count}</Text>
       
-      {clickedQuestion && (
+      {viewClickedQuestion && (
         <RenderHtml
         // contentWidth={width}
         source={{html:q_body}}
@@ -36,8 +38,9 @@ export default function AppCard(props) {
       )}
       <Button
         title='View Question Body'
-        onPress={() => setClickedQuestion(!clickedQuestion)}
+        onPress={() => setViewClickedQuestion(!viewClickedQuestion)}
       ></Button>
     </Card>
+   
   );
 }
