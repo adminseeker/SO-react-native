@@ -5,12 +5,12 @@ import { SearchBar } from 'react-native-elements';
 import AppCard from './Card';
 
 export default function Home(props) {
-  const [text, setText] = useState('CDEF');
+  const [text, setText] = useState('');
   const [res, setResult] = useState(null);
 
   const getRes = async () => {
     const fetchres = await fetch(
-      `https://api.stackexchange.com/2.3/search?site=stackoverflow&order=desc&sort=activity&intitle=${text}&filter=withbody&pagesize=10`
+      `https://api.stackexchange.com/2.3/search?site=stackoverflow&order=desc&sort=activity&intitle=${text}&filter=withbody&pagesize=20`
     );
     const jsonres = await fetchres.json();
 
@@ -25,7 +25,7 @@ export default function Home(props) {
       <View style={{width:"50%",flex:0.25}}>
       <SearchBar
  
-        placeholder='Scam'
+        placeholder='Enter Query'
         value={text}
         onChangeText={newtext => {
           setText(newtext);
@@ -49,7 +49,7 @@ export default function Home(props) {
             q_title={item.title}
             q_body={item.body}
             q_answer_count={item.answer_count}
-            getAnswers={()=>props.navigation.navigate('Answers',{"q_id":item.question_id})}
+            getAnswers={()=>props.navigation.navigate('Answers',{"q_id":item.question_id,"q_title":item.title})}
           ></AppCard>
           
           
